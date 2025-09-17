@@ -13,8 +13,9 @@ def create_user(db: Session, email: str, password: str, full_name: str = None) -
     Create and store a new user in the database.
     Password is securely hashed.
     """
+    normalized_email = email.strip().lower()
     user = models.User(
-        email=email,
+        email=normalized_email,
         hashed_password=hash_password(password),
         full_name=full_name,
     )
@@ -28,7 +29,8 @@ def get_user_by_email(db: Session, email: str) -> models.User | None:
     """
     Retrieve a user by email.
     """
-    return db.query(models.User).filter(models.User.email == email).first()
+    normalized_email = email.strip().lower()
+    return db.query(models.User).filter(models.User.email == normalized_email).first()
 
 
 def set_password(db: Session, user: models.User, new_password: str) -> models.User:

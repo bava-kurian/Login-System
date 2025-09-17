@@ -32,3 +32,12 @@ class RegisterResponse(BaseModel):
     id: int
     email: EmailStr
     full_name: Optional[str] = None
+
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    new_password: str
