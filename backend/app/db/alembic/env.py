@@ -19,7 +19,7 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # Import your models' Base
-from app.db.models import Base  # Adjust the import path as needed
+from models import Base  # Adjust the import path as needed
 target_metadata = Base.metadata
 
 def run_migrations_offline():

@@ -21,11 +21,13 @@ class User(Base):
 class RefreshToken(Base):
     __tablename__ = "refresh_tokens"
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+
 
     token_hash = Column(String(512), nullable=False, unique=True)  # store only hashed token
     revoked = Column(Boolean, default=False)
-
+    
+    issued_at = Column(DateTime, default=datetime.utcnow) 
     created_at = Column(DateTime, default=datetime.utcnow)
     expires_at = Column(DateTime, nullable=False)
 
@@ -35,11 +37,11 @@ class RefreshToken(Base):
 class ResetToken(Base):
     __tablename__ = "reset_tokens"
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    
     token_hash = Column(String(512), nullable=False, unique=True)  # hashed token only
     used = Column(Boolean, default=False)
-
+    
     created_at = Column(DateTime, default=datetime.utcnow)
     expires_at = Column(DateTime, nullable=False)
 
